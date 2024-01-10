@@ -8,33 +8,49 @@ import {useNavigate} from 'react-router-dom'
 const Login = () => {
 
   const navigate = useNavigate()
+  const [loading, setLoading] = useState(false)
   const [form, setForm] = useState({
     email: '',
     password: '',
   })
 
-  const handleLogin = ()=>{
-    // eslint-disable-next-line no-undef
-    // axios.post(`${import.meta.env.VITE_APP_API_URL}/login`, {
-    //   email: form.email,
-    //   password: form.password
-    // })
-    // .then((res)=>{
-      // localStorage.setItem('token', res.data.token)
+  const handleLogin = async()=>{
+    try {
+      setLoading(true)
+      const response = await axios.post('http://localhost:4000/v1/users/login', {
+        email: form.email,
+        password: form.password
+      })
+      const user = response.data.data
+      localStorage.setItem('token', user.token)
+      localStorage.setItem('refresh-token', user.token)
+      setLoading(false)
+      alert('berhasil login')
       navigate('/main/profile')
-    // })
-    // .catch(()=>{
-    //   alert('maaf password anda salah')
-    // })
+    } catch (error) {
+      const message = error.response.data.message
+      alert(message)
+      setLoading(false)
+    }
+  
+  
+
   }
+
+  // if(localStorage.getItem('name')){
+  //   return (
+  //   <h1>Selamat Datang bro.. {localStorage.getItem('name')}</h1>
+  //   )
+  // }
+  
   return (
     <div>
       <div className={styles.wrapper}>
-        <h1 className={styles.title}>halaman login</h1>
+        <h1 className={styles.title}>halaman login {localStorage.getItem('name')}</h1>
         <div className={styles.wrapperForm}>
           <Input type="email" placeholder="Email" label="Email" value={form.email} onChange={(e) => setForm({...form, email: e.target.value})}  />
           <Input type="password" placeholder="Password" label="Password" value={form.password} onChange={(e)=> setForm({...form, password: e.target.value})} />
-          <Button onClick={handleLogin}>Login</Button>
+          <Button className="bg-dark" onClick={handleLogin}>{loading ? 'loading...' : 'login'}</Button>
         </div>
       </div>
     </div>

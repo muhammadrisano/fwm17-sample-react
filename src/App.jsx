@@ -8,6 +8,7 @@ import Products from "./pages/main/Product/Products";
 import Main from "./pages/main";
 import ListProduct from "./pages/main/ListProduct";
 import AddPost from "./pages/main/AddPost";
+import ProtectedRoute from "./components/module/ProtectedRoute";
 
 const App = () => {
   return (
@@ -16,10 +17,17 @@ const App = () => {
         <Route index element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
-        <Route path="/main" element={<Main />}>
+        <Route
+          path="/main"
+          element={
+            <ProtectedRoute>
+              <Main />
+            </ProtectedRoute>
+          }
+        >
           <Route path="profile" element={<Profile />} />
           <Route path="products/:id" element={<Products />} />
-          <Route path="list" element={<ListProduct/>} />
+          <Route path="list" element={<ListProduct />} />
           <Route path="post/add" element={<AddPost />} />
         </Route>
       </Routes>
