@@ -11,6 +11,7 @@ const Card = ({data, onDelete, onUpdate}) => {
       <div className='flex gap-1'>
         <Button onClick={onUpdate} className="bg-secondary">Edit</Button>
         <Button onClick={onDelete} className="bg-primary"> Delete </Button>
+        
       </div>
     </div>
   )

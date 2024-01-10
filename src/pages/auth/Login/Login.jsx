@@ -4,9 +4,10 @@ import Input from "../../../components/base/Input";
 import Button from "../../../components/base/Button";
 import axios from "axios";
 import {useNavigate} from 'react-router-dom'
+import { useSelector } from "react-redux";
 
 const Login = () => {
-
+  const {name} = useSelector((state)=>state)
   const navigate = useNavigate()
   const [loading, setLoading] = useState(false)
   const [form, setForm] = useState({
@@ -46,7 +47,7 @@ const Login = () => {
   return (
     <div>
       <div className={styles.wrapper}>
-        <h1 className={styles.title}>halaman login {localStorage.getItem('name')}</h1>
+        <h1 className={styles.title}>halaman login {name}</h1>
         <div className={styles.wrapperForm}>
           <Input type="email" placeholder="Email" label="Email" value={form.email} onChange={(e) => setForm({...form, email: e.target.value})}  />
           <Input type="password" placeholder="Password" label="Password" value={form.password} onChange={(e)=> setForm({...form, password: e.target.value})} />

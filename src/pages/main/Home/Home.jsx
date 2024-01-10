@@ -1,32 +1,63 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import Card from "../../../components/module/Card";
+import {useSelector, useDispatch} from 'react-redux'
+import CardCount from "../../../components/module/Card/CardCount";
 
 const Home = () => {
+  const stateGlo = useSelector((state)=>state)
+  const dispatch = useDispatch()
   const [name, setName] = useState('')
+  const nameBtn = "Simpan"
+  const biodata = {
+    name: 'rsiano',
+    email: 'risa@gmail.com'
+  }
 
   const handleSave = ()=>{
-    localStorage.setItem('name', name)
-    alert('berhasil menyimpan data di localstoge')
-    // setName('')
+    dispatch({
+      type: 'CHANGE_NAME',
+      payload: name
+    })
+    setName('')
   }
   const handleRemove = ()=>{
     localStorage.removeItem('name')
   }
+
+  const handleIncrement = ()=>{
+    dispatch({
+      type: 'INCREMENT'
+    })
+  }
+
+  const handleDecrement = ()=>{
+    dispatch({
+      type: 'DECREMENT'
+    })
+  }
   return (
     <div>
       <h1>halamn home</h1>
-
+      <CardCount/>
       {/* <a href="/login">login</a> */}
       <Link to="/login">login</Link>
       <hr />
       <p>belajar menggunakan localstore</p>
       <p>data di State Name: {name}</p>
+      <p>{biodata?.name}</p>
       <label>
         Nama:
         <input type="text" id="name" placeholder="Nama" value={name} onChange={(e)=>setName(e.target.value)} />
       </label>
       <button onClick={handleSave}>Simpan</button>
       <button onClick={handleRemove}>hapus</button>
+
+      <h4>Nama saya di state global adalah {stateGlo.name} </h4>
+
+      <p>nilai count : {stateGlo.count}</p>
+      <button onClick={handleIncrement}>Increment</button>
+      <button onClick={handleDecrement}>Decrement</button>
     </div>
   );
 };
