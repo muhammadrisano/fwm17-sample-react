@@ -9,6 +9,7 @@ import Main from "./pages/main";
 import ListProduct from "./pages/main/ListProduct";
 import AddPost from "./pages/main/AddPost";
 import ProtectedRoute from "./components/module/ProtectedRoute";
+import AppProducts from "./pages/main/AddProduct";
 
 const App = () => {
   return (
@@ -29,6 +30,7 @@ const App = () => {
           <Route path="products/:id" element={<Products />} />
           <Route path="list" element={<ListProduct />} />
           <Route path="post/add" element={<AddPost />} />
+          <Route path="add-product" element={<AppProducts/>}/>
         </Route>
       </Routes>
     </BrowserRouter>

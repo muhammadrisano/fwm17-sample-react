@@ -5,7 +5,7 @@ import {useSelector, useDispatch} from 'react-redux'
 import CardCount from "../../../components/module/Card/CardCount";
 
 const Home = () => {
-  const stateGlo = useSelector((state)=>state)
+  const {count} = useSelector((state)=>state.count)
   const dispatch = useDispatch()
   const [name, setName] = useState('')
   const nameBtn = "Simpan"
@@ -36,6 +36,8 @@ const Home = () => {
       type: 'DECREMENT'
     })
   }
+
+  
   return (
     <div>
       <h1>halamn home</h1>
@@ -53,9 +55,9 @@ const Home = () => {
       <button onClick={handleSave}>Simpan</button>
       <button onClick={handleRemove}>hapus</button>
 
-      <h4>Nama saya di state global adalah {stateGlo.name} </h4>
 
-      <p>nilai count : {stateGlo.count}</p>
+      <p>nilai count : {count}</p>
+
       <button onClick={handleIncrement}>Increment</button>
       <button onClick={handleDecrement}>Decrement</button>
     </div>

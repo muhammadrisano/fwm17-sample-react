@@ -1,33 +1,10 @@
-import {createStore} from "redux"
+import {createStore, applyMiddleware} from "redux"
 
-const initialState = {
-  name: 'risano akbar',
-  count: 0,
-}
-
-const rootReducer = (state = initialState, action)=>{
-  if(action.type === 'INCREMENT'){
-    return {
-      ...state,
-      count: state.count + 1
-    }
-  }else if(action.type === 'DECREMENT'){
-    return {
-      ...state,
-      count: state.count - 1
-    }
-  }else if(action.type === 'CHANGE_NAME'){
-    return{
-      ...state,
-      name: action.payload
-    }
-  }
-  return state
-}
+import {thunk} from 'redux-thunk'
+import logger  from 'redux-logger'
+import rootReducer from "./reducer/reducer"
 
 
-
-
-const store = createStore(rootReducer)
+const store = createStore(rootReducer, applyMiddleware(thunk, logger))
 
 export default store

@@ -2,14 +2,16 @@ import React, { useState } from "react";
 import styles from "./login.module.css";
 import Input from "../../../components/base/Input";
 import Button from "../../../components/base/Button";
-import axios from "axios";
+
 import {useNavigate} from 'react-router-dom'
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { login } from "../../../configs/redux/action/userAction";
 
 const Login = () => {
-  const {name} = useSelector((state)=>state)
+  const {loading} = useSelector((state)=>state.user)
+  const dispatch = useDispatch()
   const navigate = useNavigate()
-  const [loading, setLoading] = useState(false)
+
   const [form, setForm] = useState({
     email: '',
     password: '',
@@ -17,24 +19,14 @@ const Login = () => {
 
   const handleLogin = async()=>{
     try {
-      setLoading(true)
-      const response = await axios.post('http://localhost:4000/v1/users/login', {
-        email: form.email,
-        password: form.password
-      })
-      const user = response.data.data
-      localStorage.setItem('token', user.token)
-      localStorage.setItem('refresh-token', user.token)
-      setLoading(false)
-      alert('berhasil login')
+      const user = await dispatch(login(form))
+      console.log('data user =', user);
       navigate('/main/profile')
     } catch (error) {
-      const message = error.response.data.message
-      alert(message)
-      setLoading(false)
+      // console.log(error);
+      // console.log('test')
+      alert(error.data.message)
     }
-  
-  
 
   }
 
@@ -47,7 +39,7 @@ const Login = () => {
   return (
     <div>
       <div className={styles.wrapper}>
-        <h1 className={styles.title}>halaman login {name}</h1>
+        <h1 className={styles.title}>halaman login</h1>
         <div className={styles.wrapperForm}>
           <Input type="email" placeholder="Email" label="Email" value={form.email} onChange={(e) => setForm({...form, email: e.target.value})}  />
           <Input type="password" placeholder="Password" label="Password" value={form.password} onChange={(e)=> setForm({...form, password: e.target.value})} />
