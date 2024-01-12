@@ -1,11 +1,14 @@
-import axios from "axios"
+
+import api from "../../api"
 
 export const login = (data)=>  async (dispatch)=>{
   // return new Promise(async(resolve, reject)=>{
     try {
       dispatch({type: 'LOGIN_REQUEST'})
-      const response = await axios.post('http://localhost:4000/v1/users/login', data)
+      const response = await api.post('/users/login', data)
       const user = response.data.data
+      localStorage.setItem('token', user.token)
+      localStorage.setItem('refresh-token', user.refreshToken)
       dispatch({type: 'LOGIN_SUCCESS', payload:user })
       return user
     } catch (error) {

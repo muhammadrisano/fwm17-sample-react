@@ -6,8 +6,8 @@ import Button from '../../base/Button'
 const Card = ({data, onDelete, onUpdate}) => {
   return (
     <div className={styles.wrapper}>
-      <h3>{data.title}</h3>
-      <p>{data.body}</p>
+      <h3>{data.name}</h3>
+      <p>{data.description}</p>
       <div className='flex gap-1'>
         <Button onClick={onUpdate} className="bg-secondary">Edit</Button>
         <Button onClick={onDelete} className="bg-primary"> Delete </Button>
