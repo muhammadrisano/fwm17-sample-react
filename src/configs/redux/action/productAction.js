@@ -24,12 +24,20 @@ export const removeProduct = (id)=>(dispatch)=>{
     })
 }
 
-export const getProducts = (params)=> async (dispatch)=>{
+export const getProducts = ({page, limit, sort, sortBy, search})=> async (dispatch)=>{
   try {
     dispatch({
       type: 'GET_PRODUCTS_REQUEST',
     })
-    const response = await api.get('/products')
+    const response = await api.get('/products', {
+      params:{
+        page,
+        limit,
+        sort,
+        sortBy,
+        ...(search ? {search:search }: {})
+      }
+    })
     const products =  response.data.data
     dispatch({
       type: 'GET_PRODUCTS_SUCCESS',
